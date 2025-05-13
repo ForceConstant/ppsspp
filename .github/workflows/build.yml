@@ -2,25 +2,25 @@ name: Build
 
 on:
   push:
-    branches:
-    - master
-    # For testing.
-    - actions
-    tags:
-      - "v*.*"
-    paths-ignore:
-    - '*.{txt,md}'
-    - 'Tools/**'
-    - '.{editorconfig,gitattributes,gitignore}'
-    - 'appveyor.yml'
-  pull_request:
-    branches:
-    - master
-    paths-ignore:
-    - '*.{txt,md}'
-    - 'Tools/**'
-    - '.{editorconfig,gitattributes,gitignore}'
-    - 'appveyor.yml'
+  #   branches:
+  #   - master
+  #   # For testing.
+  #   - actions
+  #   tags:
+  #     - "v*.*"
+  #   paths-ignore:
+  #   - '*.{txt,md}'
+  #   - 'Tools/**'
+  #   - '.{editorconfig,gitattributes,gitignore}'
+  #   - 'appveyor.yml'
+  # pull_request:
+  #   branches:
+  #   - master
+  #   paths-ignore:
+  #   - '*.{txt,md}'
+  #   - 'Tools/**'
+  #   - '.{editorconfig,gitattributes,gitignore}'
+  #   - 'appveyor.yml'
 
 env:
   BUILD_CONFIGURATION: Release
