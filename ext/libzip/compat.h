@@ -53,7 +53,7 @@
 
 #ifdef HAVE_STDBOOL_H
 #include <stdbool.h>
-#else
+#elif !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L  // 'bool' is a keyword with '-std=c23' onwards
 typedef char bool;
 #define true 1
 #define false 0
