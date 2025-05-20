@@ -394,8 +394,10 @@ jobs:
         cp build-switch/PPSSPPSwitch.nro ppsspp-switch/
         cp -r assets ppsspp-switch/assets
 
-    - name: Upload build
-      uses: actions/upload-artifact@v1
+    - name: Upload artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
       with:
-        name: Switch build
-        path: ppsspp-switch/
+        name: ppsspp-switch-build
+        path: |
+          ppsspp-switch/
