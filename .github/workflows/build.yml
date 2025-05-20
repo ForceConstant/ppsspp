@@ -363,7 +363,8 @@ jobs:
     runs-on: ubuntu-latest
     container: git.libretro.com:5050/libretro-infrastructure/libretro-build-libnx-devkitpro:latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
