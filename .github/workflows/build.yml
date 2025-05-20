@@ -373,7 +373,7 @@ jobs:
     - name: Build for Switch
       working-directory: ${{ env.GITHUB_WORKSPACE }}
       run: |
-        mkdir build-switch && cd build-switch
+        mkdir build-switch && cd build-switch && \
         cmake -DCMAKE_MESSAGE_LOG_LEVEL=STATUS -G Ninja -DCMAKE_TOOLCHAIN_FILE=${DEVKITPRO}/cmake/Switch.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DHAVE_STDBOOL_H:BOOL=TRUE \
@@ -386,8 +386,9 @@ jobs:
         -DUSE_ARMIPS:BOOL=FALSE \
         -DUSE_SYSTEM_LIBPNG:BOOL=FALSE \
         -DCMAKE_COLOR_DIAGNOSTICS:BOOL=TRUE \
-        ..
-        ninja
+        .. && \
+        make -j8
+        
 
     - name: Package build
       working-directory: ${{ env.GITHUB_WORKSPACE }}
