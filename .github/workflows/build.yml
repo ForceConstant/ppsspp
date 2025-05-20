@@ -380,7 +380,7 @@ jobs:
         -DUSING_GLES2=OFF \
         -DUSE_SYSTEM_FFMPEG=ON \
         -DUSE_LIBNX=ON \
-        -DFORCED_CPU=aarch64 
+        -DFORCED_CPU=aarch64 \
         -DUSE_DISCORD=OFF && \
         make -j8
 
