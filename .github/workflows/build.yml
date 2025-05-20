@@ -365,11 +365,6 @@ jobs:
       image: git.libretro.com:5050/libretro-infrastructure/libretro-build-libnx-devkitpro:latest
       options: --user root
     steps:
-    - name: precheck
-      run: |
-        ninja --version
-        id
-
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -378,23 +373,16 @@ jobs:
     - name: Build for Switch
       working-directory: ${{ env.GITHUB_WORKSPACE }}
       run: |
-        ninja --version && \
         mkdir build-switch && cd build-switch && \
-        cmake -DCMAKE_MESSAGE_LOG_LEVEL=STATUS -G Ninja -DCMAKE_TOOLCHAIN_FILE=${DEVKITPRO}/cmake/Switch.cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DHAVE_STDBOOL_H:BOOL=TRUE \
-        -DUSE_LIBNX:BOOL=TRUE \
-        -DUSING_GLES2:BOOL=TRUE \
-        -DUSING_EGL:BOOL=FALSE \
-        -DUSE_FFMPEG:BOOL=FALSE \
-        -DUSE_DISCORD:BOOL=FALSE \
-        -DUSE_MINIUPNPC:BOOL=FALSE \
-        -DUSE_ARMIPS:BOOL=FALSE \
-        -DUSE_SYSTEM_LIBPNG:BOOL=FALSE \
-        -DCMAKE_COLOR_DIAGNOSTICS:BOOL=TRUE \
-        .. && \
-        ninja -j 8 -v
-        
+        FFMPEG_DIR=/opt/devkitpro/portlibs/switch \
+        cmake .. \
+        -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/Switch.cmake \
+        -DUSING_GLES2=OFF \
+        -DUSE_SYSTEM_FFMPEG=ON \
+        -DUSE_LIBNX=ON \
+        -DFORCED_CPU=aarch64 
+        -DUSE_DISCORD=OFF && \
+        make -j8
 
     - name: Package build
       working-directory: ${{ env.GITHUB_WORKSPACE }}
