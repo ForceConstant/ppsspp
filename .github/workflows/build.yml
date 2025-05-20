@@ -361,8 +361,9 @@ jobs:
 
   build-switch:
     runs-on: ubuntu-latest
-    container: git.libretro.com:5050/libretro-infrastructure/libretro-build-libnx-devkitpro:latest
-    options: --user root
+    container: 
+      image: git.libretro.com:5050/libretro-infrastructure/libretro-build-libnx-devkitpro:latest
+      options: --user root
     steps:
     - name: Checkout
       uses: actions/checkout@v4
