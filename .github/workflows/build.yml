@@ -365,6 +365,11 @@ jobs:
       image: git.libretro.com:5050/libretro-infrastructure/libretro-build-libnx-devkitpro:latest
       options: --user root
     steps:
+    - name: precheck
+      run: |
+        ninja --version
+        id
+
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -373,6 +378,7 @@ jobs:
     - name: Build for Switch
       working-directory: ${{ env.GITHUB_WORKSPACE }}
       run: |
+        ninja --version && \
         mkdir build-switch && cd build-switch && \
         cmake -DCMAKE_MESSAGE_LOG_LEVEL=STATUS -G Ninja -DCMAKE_TOOLCHAIN_FILE=${DEVKITPRO}/cmake/Switch.cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -387,7 +393,7 @@ jobs:
         -DUSE_SYSTEM_LIBPNG:BOOL=FALSE \
         -DCMAKE_COLOR_DIAGNOSTICS:BOOL=TRUE \
         .. && \
-        make -j8
+        ninja -j 8 -v
         
 
     - name: Package build
