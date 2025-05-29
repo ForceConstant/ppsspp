@@ -263,8 +263,23 @@ if(USE_NO_MMAP)
 	add_compile_definitions(NO_MMAP MASKED_PSP_MEMORY)
 endif()
 
+# Generate glslang/build_info.h
+set(GLSLANG_BUILD_INFO_H "${CMAKE_CURRENT_BINARY_DIR}/glslang/build_info.h")
+add_custom_command(
+    OUTPUT ${GLSLANG_BUILD_INFO_H}
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/glslang"
+    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang/build_info.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang"
+        -i "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang/build_info.h.tmpl"
+        -o "${GLSLANG_BUILD_INFO_H}"
+    DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang/build_info.py"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang/build_info.h.tmpl"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang/CHANGES.md"
+)
+
 # Work around for some misfeature of the current glslang build system
-include_directories(ext/glslang)
+include_directories(ext/glslang ${CMAKE_CURRENT_BINARY_DIR})
 
 # Not sure if this is the best way - what about system glew?
 # Anyway, glew will be going away anyway.
